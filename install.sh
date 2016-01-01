@@ -27,7 +27,7 @@ function install_bashrc {
     cd $TMP_DIR
     run_or_warn git clone https://bitbucket.org/mexorsu/bashrc
     cd bashrc
-    sudo_or_warn ./install.sh
+    run_or_warn ./install.sh
 };
 
 
@@ -37,7 +37,7 @@ function install_vimrc {
     cd $TMP_DIR
     run_or_warn git clone https://bitbucket.org/mexorsu/vimrc
     cd vimrc
-    sudo_or_warn ./install.sh
+    run_or_warn ./install.sh
 }; 
 
 function install_java {
