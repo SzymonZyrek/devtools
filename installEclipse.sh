@@ -1,6 +1,9 @@
 #!/bin/bash
+if [[ "$FUNCTIONS_ARE_THERE" == "" ]]
+then
+    . functions.sh
+fi
 DEFAULT_INSTALLATION_DIR=/opt
-. functions.sh
 
 if [[ "$ARCH" == "64" ]]
 then

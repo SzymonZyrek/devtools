@@ -163,3 +163,5 @@ function install_bin {
     sudo_or_fail update-alternatives --install $BIN_PATH $APP_NAME $EXEC_PATH 1
     run_or_fail create_shortcut $APP_NAME $BIN_PATH $2
 }
+
+FUNCTIONS_ARE_THERE="true"
