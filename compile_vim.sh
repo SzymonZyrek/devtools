@@ -24,3 +24,4 @@ sudo update-alternatives --set vi /usr/bin/vim
 vim --version
 cd ../..
 rm -rf tmp
+exit 0

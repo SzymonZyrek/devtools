@@ -6,8 +6,11 @@ BIN_DIR=/usr/bin
 
 function error {
     echo -e $@
+    rm -rf $TMP_DIR
     exit 1
 }
+
+trap "error '*--Terminated!'" SIGINT SIGTERM
 
 function run_or_fail {
     echo "\$ $@"
@@ -19,6 +22,27 @@ function run_or_fail {
 	if [ $RESULT -ne 0 ]
     then
         error "Command execution failed:\n\t\$ $@\nReason:\n\t$ERR_MSG";	
+	fi
+}
+
+function run_or_warn {
+    echo "\$ $@"
+    $@ 2>.err.tmp;
+    RESULT=$?
+    ERR_MSG=`cat .err.tmp`;
+    rm .err.tmp; 
+    
+	if [ $RESULT -ne 0 ]
+    then
+        echo "Command execution failed:\n\t\$ $@\nReason:\n\t$ERR_MSG";	
+        while true; do
+            read -p "Do you want to continue?" ysn
+            case $ysn in
+                [Yy]* ) echo "M'kay, moving along, nothing to see here.."; break;;
+                [Nn]* ) error $ERR_MSG; break;;
+                * ) echo "It's an yes/no question m8..";;
+            esac
+        done
 	fi
 }
 
@@ -36,14 +60,36 @@ function sudo_or_fail {
 	fi
 }
 
+function sudo_or_warn {
+    CMD="sudo $@"
+    echo "\$ $CMD"
+    $CMD 2>.err.tmp;
+    RESULT=$?
+    ERR_MSG=`cat .err.tmp`;
+    rm .err.tmp; 
+    
+	if [ $RESULT -ne 0 ]
+    then
+        echo "Command execution failed:\n\t\$ $@\nReason:\n\t$ERR_MSG";	
+        while true; do
+            read -p "Do you want to continue?" yn
+            case $yn in
+                [Yy]* ) echo "M'kay, moving along, nothing to see here.."; break;;
+                [Nn]* ) error $ERR_MSG; break;;
+                * ) echo "It's an yes/no question m8..";;
+            esac
+        done
+	fi
+}
+
 function install_package {
     echo "--installing $@";
     if hash apt-get 2>/dev/null; 
     then
-        run_or_fail "sudo apt-get install $@";
+        run_or_warn "sudo apt-get install $@";
     elif hash yum 2>/dev/null;
     then
-        run_or_fail "sudo yum install $@";
+        run_or_warn "sudo yum install $@";
     else
         error "Did not find any of the supported package managers (apt-get/yum)";
     fi
@@ -83,6 +129,7 @@ function create_shortcut {
 }
 
 function do_or_skip {
+    yn=""
     TEXT="**** Do you want to run: '$@' ?****"
 	while true; do
         read -p "$TEXT" yn
