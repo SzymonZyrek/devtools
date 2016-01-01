@@ -13,7 +13,7 @@ function install_base_packages {
     PACKAGES=`cat packages.list`
     echo "Installing base packages: $PACKAGES"
     #rm packages.list
-    sudo_or_warn apt-get install $PACKAGES
+    sudo_or_warn $PACKAGE_MANAGER_INSTALL_CMD $PACKAGES
 }; 
 
 
