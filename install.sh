@@ -58,12 +58,20 @@ function install_eclipse {
     run_or_warn ./installEclipse.sh
 };
 
+function install_eclim {
+    echo '|'
+    echo '*--installing eclim from dropbox'
+    cd $TMP_DIR
+    run_or_warn ./installEclim.sh
+};
+
 do_or_skip install_base_packages
 do_or_skip recompile_vim_from_sources
 do_or_skip install_bashrc
 do_or_skip install_vimrc
 do_or_skip install_java
 do_or_skip install_eclipse
+do_or_skip install_eclim
 
 cd $STARTING_DIR
 
