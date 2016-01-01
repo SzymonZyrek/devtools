@@ -10,6 +10,6 @@ else
 fi
 
 run_or_fail wget $DOWNLOAD_LINK -O eclipse.tar.gz
-
+tar -xzf
 
 

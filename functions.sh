@@ -1,12 +1,13 @@
 #!/bin/bash
 
+. setSystemSpecificStuff.sh
+
 function error {
     echo -e $@
     rm -rf $TMP_DIR
     exit 1
-}
+}; trap "error '*--Terminated!'" SIGINT SIGTERM
 
-trap "error '*--Terminated!'" SIGINT SIGTERM
 
 function run_or_fail {
     echo "\$ $@"

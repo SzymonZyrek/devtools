@@ -3,6 +3,9 @@ vim
 curl
 wget
 tmux
+tar
+perl
+python
 pidgin
 openssh-client
 openssh-server

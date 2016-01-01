@@ -8,8 +8,11 @@ run_or_fail mkdir $TMP_DIR
 git config --global credential.helper "cache --timeout=5"
 
 function install_base_packages {
+    cat packages.general > packages.list
+    cat "packages.$PACKAGE_MANAGER" > packages.list
     PACKAGES=`cat packages.list`
     echo "Installing base packages: $PACKAGES"
+    #rm packages.list
     sudo_or_warn apt-get install $PACKAGES
 }; 
 
