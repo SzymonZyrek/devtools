@@ -5,7 +5,6 @@
 #sudo_or_fail mkdir -p $INSTALL_DIR
 echo "Creating temporary installation directory at $INSTALL_DIR"
 run_or_fail mkdir $TMP_DIR
-git config --global credential.helper "cache --timeout=5"
 
 function install_base_packages {
     cat packages.general > packages.list
