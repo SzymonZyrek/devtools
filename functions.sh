@@ -1,9 +1,5 @@
 #!/bin/bash
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-USER_DESKTOP_DIR=$(xdg-user-dir DESKTOP)
-BIN_DIR=/usr/bin
-
 function error {
     echo -e $@
     rm -rf $TMP_DIR

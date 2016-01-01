@@ -3,8 +3,6 @@
 . functions.sh
 #INSTALL_DIR=/opt/devtools
 #sudo_or_fail mkdir -p $INSTALL_DIR
-STARTING_DIR=`pwd`
-TMP_DIR=${STARTING_DIR}/tmp
 echo "Creating temporary installation directory at $INSTALL_DIR"
 run_or_fail mkdir $TMP_DIR
 git config --global credential.helper "cache --timeout=5"
