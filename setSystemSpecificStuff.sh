@@ -46,3 +46,10 @@ then
 else
     error "Did not find any of the supported package managers (apt-get/yum/pacman)";
 fi
+
+if [[ `arch` =~ .*64.* ]]
+then
+    ARCH=64
+else
+    ARCH=32
+fi

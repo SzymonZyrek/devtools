@@ -1,6 +1,5 @@
 #!/bin/bash
 
-. setSystemSpecificStuff.sh
 
 function error {
     echo -e $@
@@ -8,6 +7,7 @@ function error {
     exit 1
 }; trap "error '*--Terminated!'" SIGINT SIGTERM
 
+. setSystemSpecificStuff.sh
 
 function run_or_fail {
     echo "\$ $@"
@@ -91,6 +91,22 @@ function install_package {
         error "Did not find any of the supported package managers (apt-get/yum)";
     fi
 }
+
+# path
+function check_if_root_place {
+    if [[ -e $1 ]]
+    then
+        if [[ "`stat -c %U $1 | grep root | wc -l`" == "1" ]]
+        then
+            echo true
+        else
+            echo false
+        fi
+    else
+        check_if_root_place `echo $1 | sed -e 's#^\(.*\)/[^/]*$#\1#'`
+    fi
+}
+
 # name, path
 function create_shortcut {
     echo "SCRIPT_DIR:$SCRIPT_DIR"
@@ -146,4 +162,4 @@ function install_bin {
     echo "Installing $APP_NAME"
     sudo_or_fail update-alternatives --install $BIN_PATH $APP_NAME $EXEC_PATH 1
     run_or_fail create_shortcut $APP_NAME $BIN_PATH $2
-}  
+}
