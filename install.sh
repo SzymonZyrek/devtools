@@ -85,14 +85,14 @@ function install_powerline_fonts {
 }
 
 do_or_skip install_base_packages
+do_or_skip install_powerline_fonts
+do_or_skip install_zsh
 do_or_skip recompile_vim_from_sources
 do_or_skip install_bashrc
 do_or_skip install_vimrc
 do_or_skip install_java
 do_or_skip install_eclipse
 do_or_skip install_eclim
-do_or_skip install_zsh
-do_or_skip install_powerline_fonts
 
 cd $STARTING_DIR
 
