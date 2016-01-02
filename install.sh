@@ -55,14 +55,14 @@ function install_eclipse {
     echo '|'
     echo '*--installing eclipse from dropbox'
     cd $TMP_DIR
-    run_or_warn ./installEclipse.sh
+    run_or_warn . $SCRIPT_DIR/installEclipse.sh
 };
 
 function install_eclim {
     echo '|'
     echo '*--installing eclim from dropbox'
     cd $TMP_DIR
-    run_or_warn ./installEclim.sh
+    run_or_warn . $SCRIPT_DIR/installEclim.sh
 };
 
 do_or_skip install_base_packages

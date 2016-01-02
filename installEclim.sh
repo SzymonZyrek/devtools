@@ -72,4 +72,6 @@ else
     run_or_fail java -Dvim.files=$VIM_INSTALLATION_DIR -Declipse.home=$ECLIPSE_INSTALLATION_DIR -Declipse.local=$ECLIPSE_LOCAL_HOME -jar eclim.jar install
 fi
 
+install_bin $ECLIPSE_INSTALLATION_DIR/eclimd $ECLIPSE_INSTALLATION_DIR/icon.xpm
+
 rm -rf eclim.jar

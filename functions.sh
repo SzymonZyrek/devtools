@@ -13,8 +13,8 @@ function run_or_fail {
     echo "\$ $@"
     $@ 2>.err.tmp;
     RESULT=$?
-    ERR_MSG=`cat .err.tmp`;
-    rm .err.tmp; 
+    ERR_MSG=`cat .err.tmp 2>/dev/null`;
+    rm .err.tmp 2>/dev/null; 
     
 	if [ $RESULT -ne 0 ]
     then
@@ -26,8 +26,8 @@ function run_or_warn {
     echo "\$ $@"
     $@ 2>.err.tmp;
     RESULT=$?
-    ERR_MSG=`cat .err.tmp`;
-    rm .err.tmp; 
+    ERR_MSG=`cat .err.tmp 2>/dev/null`;
+    rm .err.tmp 2>/dev/null; 
     
 	if [ $RESULT -ne 0 ]
     then
@@ -48,8 +48,8 @@ function sudo_or_fail {
     echo "\$ $CMD"
     $CMD 2>.err.tmp;
     RESULT=$?
-    ERR_MSG=`cat .err.tmp`;
-    rm .err.tmp; 
+    ERR_MSG=`cat .err.tmp 2>/dev/null`;
+    rm .err.tmp 2>/dev/null; 
     
 	if [ $RESULT -ne 0 ]
     then
@@ -62,8 +62,8 @@ function sudo_or_warn {
     echo "\$ $CMD"
     $CMD 2>.err.tmp;
     RESULT=$?
-    ERR_MSG=`cat .err.tmp`;
-    rm .err.tmp; 
+    ERR_MSG=`cat .err.tmp 2>/dev/null`;
+    rm .err.tmp 2>/dev/null; 
     
 	if [ $RESULT -ne 0 ]
     then
@@ -114,29 +114,30 @@ function create_shortcut {
     EXEC_PATH=$2
     ICON_PATH=$3
     FILE_NAME="${APP_NAME}.desktop"
-    if [[ "$ICON" == "" ]]
+    FILE_PATH=$SCRIPT_DIR/$FILE_NAME
+    if [[ "$ICON_PATH" == "" ]]
     then
-        ICON=$SCRIPT_DIR/default-icon.png
+        ICON_PATH=$SCRIPT_DIR/default-icon.png
     fi
-    cp $SCRIPT_DIR/template.desktop $SCRIPT_DIR/$FILE_NAME
+    cp $SCRIPT_DIR/template.desktop $FILE_PATH
     
     SED_CMD="s#^\\(Name=\\)#\\1$APP_NAME#"
     #SED_CMD="'$SED_CMD'"
-    echo "sed -i $SED_CMD $FILE_NAME"
-    sed -i $SED_CMD $FILE_NAME
+    echo "sed -i $SED_CMD $FILE_PATH"
+    sed -i $SED_CMD $FILE_PATH
     
     SED_CMD="s#^\\(Exec=\\)#\\1$EXEC_PATH#"
     #SED_CMD="'$SED_CMD'"
-    echo "sed -i $SED_CMD $FILE_NAME"
-    sed -i $SED_CMD $FILE_NAME
+    echo "sed -i $SED_CMD $FILE_PATH"
+    sed -i $SED_CMD $FILE_PATH
     
-    SED_CMD="s#^\\(Icon=\\)#\\1$ICON#"
+    SED_CMD="s#^\\(Icon=\\)#\\1$ICON_PATH#"
     #SED_CMD="'$SED_CMD'"
-    echo "sed -i $SED_CMD $FILE_NAME"
-    sed -i $SED_CMD $FILE_NAME
+    echo "sed -i $SED_CMD $FILE_PATH"
+    sed -i $SED_CMD $FILE_PATH
     
-    chmod +x $FILE_NAME
-    mv $FILE_NAME $USER_DESKTOP_DIR
+    chmod +x $FILE_PATH
+    mv $FILE_PATH $USER_DESKTOP_DIR
 
     #sudo update-alternatives --install /usr/bin/$1 $1 $2 1
 }
@@ -157,7 +158,7 @@ function do_or_skip {
 #path, [icon]
 function install_bin {
     EXEC_PATH=$(realpath $1)
-    APP_NAME=$(echo $EXEC_PATH | sed -e 's#.*/\([^/]*\)\.[^/.]*[ \t]*$#\1#')
+    APP_NAME=$(basename $EXEC_PATH)
     BIN_PATH=${BIN_DIR}/${APP_NAME}
     echo "Installing $APP_NAME"
     sudo_or_fail update-alternatives --install $BIN_PATH $APP_NAME $EXEC_PATH 1
