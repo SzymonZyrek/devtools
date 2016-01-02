@@ -15,11 +15,17 @@ function install_base_packages {
     echo "Installing base packages: $PACKAGES"
     rm packages.list
     sudo_or_warn $PACKAGE_MANAGER_INSTALL_CMD $PACKAGES
-}; 
+};
 
+function install_dropdown_terminal {
+    echo '|'
+    echo "*--installing $DROPDOWN_TERMINAL"
+    sudo_or_warn $PACKAGE_MANAGER_INSTALL_CMD $DROPDOWN_TERMINAL
+};
 
 function recompile_vim_from_sources {
-    echo 'Compiling vim: '
+    echo '|'
+    echo '*--compiling vim: '
     ./compile_vim.sh
 };
 
@@ -32,7 +38,6 @@ function install_bashrc {
     run_or_warn ./install.sh
 };
 
-
 function install_vimrc {
     echo '|'
     echo '*--installing my vimrc'
@@ -40,7 +45,7 @@ function install_vimrc {
     run_or_warn git clone https://bitbucket.org/mexorsu/vimrc
     cd vimrc
     run_or_warn ./install.sh
-}; 
+};
 
 function install_java {
     echo '|'
@@ -85,15 +90,15 @@ function install_powerline_fonts {
 }
 
 do_or_skip install_base_packages
-do_or_skip install_powerline_fonts
+do_or_skip install_dropdown_terminal
 do_or_skip install_zsh
 do_or_skip recompile_vim_from_sources
 do_or_skip install_bashrc
 do_or_skip install_vimrc
+do_or_skip install_powerline_fonts
 do_or_skip install_java
 do_or_skip install_eclipse
 do_or_skip install_eclim
-
 cd $STARTING_DIR
 
 echo "Removing temporary installation directory: $INSTALL_DIR"

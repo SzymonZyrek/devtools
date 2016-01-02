@@ -23,7 +23,7 @@ case "$DESKTOP_SESSION" in
 esac
 
 
-if hash apt-get 2>/dev/null; 
+if hash apt-get 2>/dev/null;
 then
     PACKAGE_MANAGER_INSTALL_CMD="apt-get install"
     PACKAGE_MANAGER="apt-get"
