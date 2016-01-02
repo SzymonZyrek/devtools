@@ -48,7 +48,7 @@ function install_java {
     cd $TMP_DIR
     run_or_warn git clone https://bitbucket.org/mexorsu/java-installer
     cd java-installer
-    ./java_installator.sh --jdk `yes | ./java_installator.sh 2>/dev/null 1>&2; ./java_installator.sh -l | grep '[0-9]\.[0-9]\.[0-9]_[0-9][0-9]*' | sort -V | tail -1`
+    ./java_installator.sh --jdk `yes | ./java_installator.sh 2>/dev/null 1>&2; ./java_installator.sh -l | grep '[0-9]\.[0-9]\.[0-9]_[0-9][0-9]*' | sort -V | tail -1` --target /usr/lib/jvm
 };
 
 function install_eclipse {
@@ -65,6 +65,25 @@ function install_eclim {
     run_or_warn . $SCRIPT_DIR/installEclim.sh
 };
 
+function install_zsh {
+    echo '|'
+    echo '*--installing zsh'
+    sudo_or_warn $PACKAGE_MANAGER_INSTALL_CMD zsh
+    echo '|'
+    echo '*--installing oh-my-zsh'
+    cd $TMP_DIR
+    run_or_warn sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+};
+
+function install_powerline_fonts {
+    echo '|'
+    echo '*--installing powerline fonts'
+    cd $TMP_DIR
+    run_or_warn git clone https://github.com/powerline/fonts
+    cd fonts
+    ./install.sh
+}
+
 do_or_skip install_base_packages
 do_or_skip recompile_vim_from_sources
 do_or_skip install_bashrc
@@ -72,6 +91,8 @@ do_or_skip install_vimrc
 do_or_skip install_java
 do_or_skip install_eclipse
 do_or_skip install_eclim
+do_or_skip install_zsh
+do_or_skip install_powerline_fonts
 
 cd $STARTING_DIR
 
