@@ -5,11 +5,9 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 USER_DESKTOP_DIR=$(xdg-user-dir DESKTOP)
 BIN_DIR=/usr/bin
 
-
 case "$DESKTOP_SESSION" in
-"gnome" | "GNOME")
+"gnome" | "GNOME" | "ubuntu")
 	DROPDOWN_TERMINAL="guake"
-    USER_DESKTOP_DIR=$(xdg-user-dir DESKTOP)
     ;;
 "mate" | "MATE" | "lxde" | "LXDE")
 	DROPDOWN_TERMINAL="tilda"
