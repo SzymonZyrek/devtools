@@ -23,7 +23,7 @@ esac
 
 if hash apt-get 2>/dev/null;
 then
-    PACKAGE_MANAGER_INSTALL_CMD="apt-get install"
+    PACKAGE_MANAGER_INSTALL_CMD="apt-get update; apt-get install"
     PACKAGE_MANAGER="apt-get"
 elif hash yum 2>/dev/null;
 then
@@ -31,7 +31,7 @@ then
     PACKAGE_MANAGER="yum"
 elif hash pacman 2>/dev/null;
 then
-    PACKAGE_MANAGER_INSTALL_CMD="pacman -S"
+    PACKAGE_MANAGER_INSTALL_CMD="pacman -Syu"
     PACKAGE_MANAGER="packman"
 elif hash pact 2>/dev/null;
 then

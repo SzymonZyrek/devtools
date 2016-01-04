@@ -8,14 +8,6 @@ fi
 echo "Creating temporary installation directory at $INSTALL_DIR"
 run_or_fail mkdir $TMP_DIR
 
-function install_base_packages {
-    cat packages.general > packages.list
-    cat "packages.$PACKAGE_MANAGER" >> packages.list
-    PACKAGES=`cat packages.list`
-    echo "Installing base packages: $PACKAGES"
-    rm packages.list
-    sudo_or_warn $PACKAGE_MANAGER_INSTALL_CMD $PACKAGES
-};
 
 function install_dropdown_terminal {
     echo '|'
