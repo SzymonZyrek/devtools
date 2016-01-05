@@ -1,8 +1,5 @@
 #!/bin/bash
-if [[ "$FUNCTIONS_ARE_THERE" == "" ]]
-then
-    . functions.sh
-fi
+. util.sh
 DEFAULT_INSTALLATION_DIR=/opt
 
 if [[ "$ARCH" =~ "64" ]]
@@ -30,10 +27,11 @@ if [[ "`check_if_root_place $ECLIPSE_INSTALLATION_DIR`" == "true" ]]
 then
     sudo_or_warn mkdir -p $ECLIPSE_INSTALLATION_DIR
     sudo_or_fail mv eclipse $ECLIPSE_INSTALLATION_DIR
-    sudo chown root $ECLIPSE_INSTALLATION_DIR/eclipse
+    sudo_or_fail chown root $ECLIPSE_INSTALLATION_DIR/eclipse
+    sudo_or_fail chmod +x $ECLIPSE_INSTALLATION_DIR/eclipse/eclipse
 else
     run_or_warn mkdir -p $ECLIPSE_INSTALLATION_DIR
     run_or_fail mv eclipse $ECLIPSE_INSTALLATION_DIR
 fi
 
-install_bin $ECLIPSE_INSTALLATION_DIR/eclipse/eclipse $ECLIPSE_INSTALLATION_DIR/eclipse/icon.xpm
+install_app $ECLIPSE_INSTALLATION_DIR/eclipse/eclipse $ECLIPSE_INSTALLATION_DIR/eclipse/icon.xpm

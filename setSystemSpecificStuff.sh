@@ -1,25 +1,10 @@
 #!/bin/bash
 STARTING_DIR=`pwd`
-TMP_DIR=${STARTING_DIR}/tmp
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+TMP_DIR=${STARTING_DIR}/tmp
 USER_DESKTOP_DIR=$(xdg-user-dir DESKTOP)
 BIN_DIR=/usr/bin
-
-case "$DESKTOP_SESSION" in
-"gnome" | "GNOME" | "ubuntu")
-	DROPDOWN_TERMINAL="guake"
-    ;;
-"mate" | "MATE" | "lxde" | "LXDE")
-	DROPDOWN_TERMINAL="tilda"
-    ;;
-"kde" | "KDE")
-	DROPDOWN_TERMINAL="yakuake"
-    ;;
-*)
-    error "Not supported graphical environment: $DESKTOP_SESSION"
-    ;;
-esac
-
+SERVICES_DIR=/etc/systemd/system
 
 if hash apt-get 2>/dev/null;
 then
@@ -32,7 +17,7 @@ then
 elif hash pacman 2>/dev/null;
 then
     PACKAGE_MANAGER_INSTALL_CMD="pacman -Syu"
-    PACKAGE_MANAGER="packman"
+    PACKAGE_MANAGER="pacman"
 elif hash pact 2>/dev/null;
 then
     PACKAGE_MANAGER_INSTALL_CMD="pact install"
@@ -42,12 +27,9 @@ then
     PACKAGE_MANAGER_INSTALL_CMD="brew install"
     PACKAGE_MANAGER="brew"
 else
-    error "Did not find any of the supported package managers (apt-get/yum/pacman)";
+    echo "WARNING: Did not find any of the supported package managers (apt-get/yum/pacman), packages installation not supported";
+    PACKAGE_MANAGER_INSTALL_CMD="echo 'ERROR: No package managers detected, cannot install'"
+    PACKAGE_MANAGER="NONE"
 fi
 
-if [[ `arch` =~ .*64.* ]]
-then
-    ARCH=64
-else
-    ARCH=32
-fi
+ARCH=$(getconf LONG_BIT)
