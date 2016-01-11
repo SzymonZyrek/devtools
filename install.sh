@@ -4,9 +4,6 @@ source $(echo 'y' | wget https://bitbucket.org/mexorsu/installutil/get/master.zi
 
 #INSTALL_DIR=/opt/devtools
 #sudo_or_fail mkdir -p $INSTALL_DIR
-echo "Creating temporary installation directory at $INSTALL_DIR"
-run_or_fail mkdir $TMP_DIR
-
 
 function install_dropdown_terminal {
     echo '|'
@@ -92,5 +89,4 @@ do_or_skip install_eclipse
 do_or_skip install_eclim
 cd $STARTING_DIR
 
-echo "Removing temporary installation directory: $INSTALL_DIR"
-run_or_fail rm -rf $TMP_DIR
+the_end
