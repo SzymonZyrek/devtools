@@ -1,7 +1,6 @@
 #!/bin/bash
 . util
 TMP_PCK_FILE_NAME="packages.list"
-load setSystemSpecificStuff.sh
 
 cat "packages/packages.general" > $TMP_PCK_FILE_NAME
 cat "packages/packages.$PACKAGE_MANAGER" >> $TMP_PCK_FILE_NAME
