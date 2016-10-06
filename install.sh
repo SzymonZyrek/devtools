@@ -77,8 +77,11 @@ function install_powerline_fonts {
     ./install.sh
 }
 
+function install_base_packages {
+    sudo_or_warn cat packages/${PACKAGE_MANAGER} | xargs -I% sudo $PACKAGE_MANAGER_INSTALL_CMD %
+}
+
 do_or_skip install_base_packages
-do_or_skip install_dropdown_terminal
 do_or_skip install_zsh
 do_or_skip recompile_vim_from_sources
 do_or_skip install_bashrc
