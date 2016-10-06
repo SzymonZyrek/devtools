@@ -1,6 +1,8 @@
 #!/bin/bash
 source $(echo 'y' | wget https://bitbucket.org/mexorsu/installutil/get/master.zip -q -O master.zip ; echo 'y' | unzip master.zip 2>/dev/null 1>&2 -d master ; find master -name util.sh)
 
+ECLIM_URL='https://www.dropbox.com/s/nb6nbj75m3uhmuv/eclim.jar?dl=0'
+
 DEFAULT_ECLIPSE_INSTALLATION_DIR=/opt/eclipse
 ECLIPSE_INSTALLATION_DIR=""
 while [[ "$ECLIPSE_INSTALLATION_DIR" == "" ]]
@@ -61,7 +63,8 @@ do
     fi
 done
 
-run_or_fail wget https://www.dropbox.com/s/df368ifu9qerznb/eclim.jar?dl=0 -O eclim.jar
+run_or_fail wget $ECLIM_URL -O eclim.jar
+chmod +x eclim.jar
 if [[ "$ECLIPSE_LOCAL_HOME" == "" ]]
 then
     run_or_fail java -Dvim.files=$VIM_INSTALLATION_DIR -Declipse.home=$ECLIPSE_INSTALLATION_DIR -jar eclim.jar install
