@@ -81,6 +81,15 @@ function install_base_packages {
     sudo_or_warn cat packages/${PACKAGE_MANAGER} | xargs -I% sudo $PACKAGE_MANAGER_INSTALL_CMD %
 }
 
+function install_wallpaper_rotator {
+    echo '|'
+    echo '*--installing my wallpaper_rotator'
+    cd $TMP_DIR
+    run_or_warn git clone https://bitbucket.org/mexorsu/wallpaper-rotator
+    cd wallpaper-rotator
+    run_or_warn ./install.sh
+}
+
 do_or_skip install_base_packages
 do_or_skip install_zsh
 do_or_skip recompile_vim_from_sources
@@ -90,6 +99,7 @@ do_or_skip install_powerline_fonts
 do_or_skip install_java
 do_or_skip install_eclipse
 do_or_skip install_eclim
+do_or_skip install_wallpaper_rotator
 cd $STARTING_DIR
 
 the_end
