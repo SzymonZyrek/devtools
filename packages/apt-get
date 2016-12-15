@@ -1,0 +1,15 @@
+pidgin
+tmux
+openssl-client
+openssl-server
+guake
+gnome-shell
+build-essential
+valgrind
+vnc4server
+ant
+filezilla
+gitkraken
+g++-multilib
+gnome-tweak-tool
+kdiff3
