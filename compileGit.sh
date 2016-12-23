@@ -13,7 +13,7 @@ function get_git_sources {
         unzip master.zip
         GIT_SOURCE_DIR="$(pwd)/git-master"
     else
-        echo "No git or wget found on the system, you need to provide git source folder path manually (as a command line arg)"
+        echo "No 'git' or 'wget' found on the system, automatic source download failed. You need to provide git source path manually (as a single command line arg)"
         exit 1
     fi
 }
@@ -36,12 +36,10 @@ function compile_git {
     cd $START_DIR
 }
 
-function cleanup {
-    rm -rf $GIT_SOURCE_DIR
-}
 
 install_required_packages
 get_git_sources
 compile_git
-cleanup
+sudo update-alternatives --install /usr/bin/git git /usr/local/libexec/git-core/git 1
+
 exit 0
