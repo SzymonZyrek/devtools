@@ -1,11 +1,7 @@
-curl
-unzip
-wget
-git
-openssl-client
-openssl-server
-guake
 build-essential
 g++-multilib
+unzip
 vnc4server
 kdiff3
+gnome-shell
+guake
